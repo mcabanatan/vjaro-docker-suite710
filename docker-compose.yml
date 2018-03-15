@@ -1,0 +1,21 @@
+suitecrm:
+  image: suite710:latest
+  command: apache2-foreground
+  links:
+    - mysql_crm
+  volumes:
+    - .:/app
+    - /app/www/flywheel
+    - /home/marjhun/Documents/Projects/Flywheel/CrmFiles/flywheel:/app/www/flywheel
+  ports:
+    - "8085:80"
+
+mysql_crm:
+  image: mysql:5.6
+  ports:
+    - "3385:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=suitecrm
+  volumes:
+    - ./docker/config/mysql:/etc/mysql/conf.d
+    - ./docker/data/mysql:/var/lib/mysql
